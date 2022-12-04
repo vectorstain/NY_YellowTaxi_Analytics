@@ -54,7 +54,10 @@ isolati del centro, o un isolato che attraversa la città (est-ovest).
 * Non esitate a dare la mancia per un buon servizio.
 * Non ci sono costi per passeggeri aggiuntivi o bagagli. 
 
-*<Tabella da aggiungere>*
+| Luogo di ritiro della corsa di gruppo | Punto finale del percorso | Tariffa/Persona | Imposta MTA di 50 cent |
+|---------------------------------------|---------------------------|-----------------|------------------------|
+| Port Autority Bus                     | 59th St./6th Ave          | $3.00           | Un passeggero paga     |
+| York Avenue                           | Financial District        | $6.00           | Un passeggero paga     |
 
 * Gli orari di ritiro delle corse di gruppo sono dalle 6 alle 10, dal lunedì al venerdì (esclusi i giorni festivi).
 * I drop-off sono limitati al percorso Group Rides. Il messaggio di valutazione sullo schermo dovrebbe essere letto 'Tasso # 06 – Tariffa di gruppo.'
