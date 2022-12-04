@@ -38,6 +38,27 @@ On a first analysis we are going to examinate data collects on January 2022, you
 | Congestion_Surcharge  | Total amount collected in trip for NYS congestion surcharge.                                                                                                                                                                                         |
 | Airport_fee           | $1.25 for pick up only at LaGuardia and John F. Kennedy Airports                                                                                                                                                                                     |
 
+## Informazioni sulle tariffe misurate
+* La tariffa sullo schermo è "Tariffa #01 - Tariffa standard per città".
+* L'addebito iniziale è di $ 2,50.
+* Più 50 centesimi per 1/5 di miglio o 50 centesimi per 60 secondi nel traffico lento o quando il veicolo è
+fermata.
+* Nel traffico in movimento sulle strade di Manhattan, il contatore dovrebbe "cliccare" circa ogni quattro
+isolati del centro, o un isolato che attraversa la città (est-ovest).
+* C'è un supplemento statale di 50 centesimi per tutti i viaggi che terminano a New York City o nelle contee di Nassau, Suffolk, Westchester, Rockland, Dutchess, Orange o Putnam.
+* C'è un supplemento di 50 centesimi dalle 20:00 alle 6:00 tutti i giorni.
+* C'è un supplemento di $ 1 dalle 16:00 alle 20:00 nei giorni feriali esclusi i giorni festivi.
+* Il passeggero deve pagare tutti i pedaggi del ponte e del tunnel.
+* La ricevuta mostrerà la tariffa totale comprensiva dei pedaggi. Si prega di prendere la ricevuta.
+* L'autista non è tenuto ad accettare fatture superiori a $ 20.
+* Non esitate a dare la mancia per un buon servizio.
+* Non ci sono costi per passeggeri aggiuntivi o bagagli. 
+
+*<Tabella da aggiungere>*
+
+* Gli orari di ritiro delle corse di gruppo sono dalle 6 alle 10, dal lunedì al venerdì (esclusi i giorni festivi).
+* I drop-off sono limitati al percorso Group Rides. Il messaggio di valutazione sullo schermo dovrebbe essere letto 'Tasso # 06 – Tariffa di gruppo.'
+  
 
 ## Data values
 | Field Name            | Type | Range of values |
