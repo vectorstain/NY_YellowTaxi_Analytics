@@ -38,6 +38,35 @@ Output: file, grafico
 2. Ripetere la stessa analisi negli altri mesi
 3. Combinate i risultati
 
+## Taxi Info for Yellow Cabs
+# Informazioni sulle tariffe misurate
+* La tariffa sullo schermo è "Tariffa #01 - Tariffa standard per città".
+* L'addebito iniziale è di $ 2,50.
+* Più 50 centesimi per 1/5 di miglio o 50 centesimi per 60 secondi nel traffico lento o quando il veicolo è
+fermata.
+* Nel traffico in movimento sulle strade di Manhattan, il contatore dovrebbe "cliccare" circa ogni quattro
+isolati del centro, o un isolato che attraversa la città (est-ovest).
+* C'è un supplemento statale di 50 centesimi per tutti i viaggi che terminano a New York City o nelle contee di Nassau, Suffolk, Westchester, Rockland, Dutchess, Orange o Putnam.
+* C'è un supplemento di 50 centesimi dalle 20:00 alle 6:00 tutti i giorni.
+* C'è un supplemento di $ 1 dalle 16:00 alle 20:00 nei giorni feriali esclusi i giorni festivi.
+* Il passeggero deve pagare tutti i pedaggi del ponte e del tunnel.
+* La ricevuta mostrerà la tariffa totale comprensiva dei pedaggi. Si prega di prendere la ricevuta.
+* L'autista non è tenuto ad accettare fatture superiori a $ 20.
+* Non esitate a dare la mancia per un buon servizio.
+* Non ci sono costi per passeggeri aggiuntivi o bagagli. 
+# Informazioni per le corse di gruppo
+Due, tre o quattro persone possono fare un giro di gruppo da un taxi giallo Group Ride Stand e pagare un
+tariffa forfettaria.
+
+Luogo di ritiro della corsa di gruppo	Punto finale del percorso	Tariffa/Persona	Imposta MTA di 50 centesimi
+Port Authority Bus	59th St./6th Ave	$3.00	Un passeggero paga
+York Avenue	Financial District	$6.00	Un passeggero paga
+
+* Gli orari di ritiro delle corse di gruppo sono dalle 6 alle 10, dal lunedì al venerdì (esclusi i giorni festivi).
+* I drop-off sono limitati al percorso Group Rides. Il messaggio di valutazione sullo schermo dovrebbe essere letto 'Tasso # 06 – Tariffa di gruppo.'
+
+
+
 # NY_YellowTaxi_Analytics
 From data collected by NYC about taxi trips, we'll extract some useful analytics about the average cost of trips through several districts in the city of NY.
 
