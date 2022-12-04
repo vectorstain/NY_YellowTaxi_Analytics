@@ -156,3 +156,4 @@ cython_debug/
 
 # Dataset
 .parquet
+yellow_tripdata_2020-01.parquet
