@@ -38,8 +38,8 @@ Output: file, grafico
 2. Ripetere la stessa analisi negli altri mesi
 3. Combinate i risultati
 
-## Taxi Info for Yellow Cabs
-# Informazioni sulle tariffe misurate
+# Taxi Info for Yellow Cabs
+## Informazioni sulle tariffe misurate
 * La tariffa sullo schermo è "Tariffa #01 - Tariffa standard per città".
 * L'addebito iniziale è di $ 2,50.
 * Più 50 centesimi per 1/5 di miglio o 50 centesimi per 60 secondi nel traffico lento o quando il veicolo è
@@ -58,9 +58,7 @@ isolati del centro, o un isolato che attraversa la città (est-ovest).
 Due, tre o quattro persone possono fare un giro di gruppo da un taxi giallo Group Ride Stand e pagare un
 tariffa forfettaria.
 
-Luogo di ritiro della corsa di gruppo	Punto finale del percorso	Tariffa/Persona	Imposta MTA di 50 centesimi
-Port Authority Bus	59th St./6th Ave	$3.00	Un passeggero paga
-York Avenue	Financial District	$6.00	Un passeggero paga
+*<Tabella da aggiungere>*
 
 * Gli orari di ritiro delle corse di gruppo sono dalle 6 alle 10, dal lunedì al venerdì (esclusi i giorni festivi).
 * I drop-off sono limitati al percorso Group Rides. Il messaggio di valutazione sullo schermo dovrebbe essere letto 'Tasso # 06 – Tariffa di gruppo.'
