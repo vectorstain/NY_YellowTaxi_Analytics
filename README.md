@@ -1,43 +1,3 @@
-# Come si muovono i taxi a New York?
-In questo progetto svolgiamo un'analisi dei taxi a New York. In particolare, siamo curiosi di rispondere ad alcune specifiche Research Questions (RQ) che possono aiutare i tassisti a pianificare i loro spostamenti in città e ai clienti ad avere suggerimenti sulla convenienza dell’utilizzo di questo servizio.
-
-Per questo progetto utilizziamo i dati pubblici delle rotte dei Taxi a NYC disponibili su https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page. 
-Per rispondere alle RQ teniamo conto dei dati relativi ai Yellow Taxi per l'anno 2020.
-
-## Prima di iniziare
-1. Fare il download di Yellow Taxi Trip Records (CSV) 2020. Iniziare sul dataset di Gennaio.
-2. A causa delle dimensioni dei file, vedrete che inserire tutti dati in memoria è difficile. Se siete in grado di caricare i dati in memoria, sarà difficile eseguire qualche analisi. Per questo motivo, prima di iniziare vi invitiamo a dare un'occhiata alle RQ e a pensare ad una strategia per trattare i dati. Come liberare la memoria: https://teamtreehouse.com/community/how-to-delete-a-variable-in-python
-3. Per poter effettuare l'analisi sulle borough (distretto) è necessario combinare i dati delle rotte dei taxi con il set di dati che si trova in taxi_zone_lookup.csv. Date un'occhiata qui: https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
-4. Studiare il dataset:
-  * Per capire in che cosa consistono i dati leggete la leggenda: https://www1.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
-  * Leggete qualche informazione su come funzionano i taxi a New York per poter fare osservazioni significative: http://www.nyc.gov/assets/tlc/downloads/pdf/taxi_information.pdf
-5. Controllate per bene i dati. Bisogna cambiare qualcosa? Per esempio: ci sono rotte con distanza pari a 0, hanno senso? Controllate se sono presenti valori NaN e decidete come trattarli. Ci sono informazioni inutili?
-
-# IMPORTANTE
-1. Leggere tutte le RQ prima di iniziare a scrivere il codice
-2. Poiché i risultati che otterrete per ogni RQ possono dipendere dalle scelte che farete durante l'analisi, è molto importante (e necessario) che descriviate ogni singola decisione che prenderete e tutti i passi che farete.
-3. All'inizio della vostra analisi, scegliete e indicate chiaramente quale borough considerate per la conduzione dell'analisi: il borough di partenza o quello di arrivo.
-4. Il vostro codice deve essere il più generico possibile. Deve essere in grado di funzionare per ogni computer/anno/mese/borough senza dover cambiare righe di codice.
-
-# Research Questions
-La tariffa al miglio cambia attraverso i borough di New York? 
-Vogliamo scoprire se le spese di un utente che usufruisce dei taxi in una zona sono diverse da quelle di chi li usa in un'altra.
-Considerando il fare_amount:
-  * Calcolare il Prezzo al miglio (PM) per ogni corsa.
-  * Calcolare la media e la deviazione standard della nuova variabile per ogni borough. Poi tracciate la distribuzione con un boxplot
-
-Il prezzo per miglio potrebbe dipendere dal traffico che il Taxi trova lunga la strada. Quindi, cerchiamo di mitigare questo effetto. È probabile che la durata del viaggio dica qualcosa sulla congestione della città, soprattutto se combinata con le distanze percorse. 
-Potrebbe essere una buona idea ponderare il prezzo per miglio utilizzando il tempo necessario per completare il viaggio (T). Così, invece di PM, si può usare PMT=PM/T
-
-Svolgere le stesse analisi fatte su PM ma su PMT e confrontare i risultati.
-Input: anno, mese*, borough*
-Output: file, grafico
-
-## Suggerimenti
-1. Concentratevi su un solo mese, eseguendo tutte le vostre analisi su un unico set di dati
-2. Ripetere la stessa analisi negli altri mesi
-3. Combinate i risultati
-
 # NY_YellowTaxi_Analytics
 From data collected by NYC about taxi trips, we'll extract some useful analytics about the average cost of trips through several districts in the city of NY.
 
@@ -54,7 +14,6 @@ You can find the data set at this [link](https://www.nyc.gov/site/tlc/about/tlc-
 
 ## When was it created?
 On a first analysis we are going to examinate data collects on January 2022, you can find the data set [here](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2020-01.parquet)
-
 
 ## Schema description
 | Field Name            | Description                                                                                                                                                                                                                                          |
@@ -80,47 +39,34 @@ On a first analysis we are going to examinate data collects on January 2022, you
 | Airport_fee           | $1.25 for pick up only at LaGuardia and John F. Kennedy Airports                                                                                                                                                                                     |
 
 
+## Data values
+| Field Name            | Type | Range of values |
+|-----------------------|------|-----------------|
+| VendorID              |      | [1,2]           |
+| tpep_pickup_datetime  |      |                 |
+| tpep_dropoff_datetime |      |                 |
+| Passenger_count       |      | [0,inf]         |
+| Trip_distance         |      | [0,inf]         |
+| PULocationID          |      |                 |
+| DOLocationID          |      |                 |
+| RateCodeID            |      | [1..6]          |
+| Store_and_fwd_flag    |      | [Y,N]           |
+| Payment_type          |      | [1..6]          |
+| Fare_amount           |      | [0, inf]        |
+| Extra                 |      | [0, 0.5, 1]     |
+| MTA_tax               |      | 0.50            |
+| Improvement_surcharge |      |                 |
+| Tip_amount            |      | [0,inf]         |
+| Tolls_amount          |      | [0,inf]         |
+| Congestion_Surcharge  |      | [0,inf]         |
+| Airport_fee           |      | [0, 1.25]       |
 
 
-
-## Project Genesis
-These are some things to do at the genesis of your data analysis project
-* Create a folder in your file system to hold all your files for the analysis
-* Create a documents/spreadsheets to store the names, titles, contact information and notes of all the people connected to your project
-* Find and introduce yourself to all the people connected to your project
-* Connections to others is key to making your projects work. The more you are visible to others the more information will freely pass your way
-* Be aware of all the people that are directly and indirectly connected to your project. Meet all of them
- * Stakeholders
- * Domain Experts
- * Other data scientists
- * Database admins - data engineers
- * Solutions architects
- * Project managers
- * Web developers
- 
-## Before Looking at Data
-Once you have been given access to data, in a text document or Jupyter notebook answer the following questions:
-
-* Is it generated from industrial equipment, a website, internal software?
-
-
-* What systems use the data?
-* Have their been previous data scientists working with this dataset?
-* How has data changed over time? Which columns have been added/subtracted? 
-* Is data for some columns not being collected?
-
-## Subject Matter Research
-* Read articles, watch videos, talk to local subject matter experts
-* Read articles/papers by academics who have already studied the field using statistical analysis
-* Could be beneficial to do some analysis first as to not bias your results
-
-## First Look at Data
-* Find data dictionary
-* Even if one exists, create a column to keep track of notes for each variable
-* Make sure your data dictionary has the column name, data type, range of values and notes on each column
 * If the data comes from a relational database, ask to see the schema
 * Number of rows and columns
 * Find number of missing values per column
+
+
 
 ## Is the Data Tidy?
 * Data must be tidy before analysis starts.
@@ -128,6 +74,12 @@ Once you have been given access to data, in a text document or Jupyter notebook 
 * Data from spreadsheets or scraped from the web/pdfs might not be
 * Find data type of each column - continuous, categorical (ordinal or nominal), or date
 * Rearrange column order in a sensible manner - categorical first, continuous last. Group common variables together.
+
+
+## Research
+Beginning in March 2020, New York City faced an unprecedented public health crisis as most of the City's economy paused to slow the spread of COVID-19. This report summarizes the effects of the COVID-19 pause on TLC-regulated industries from March 15 – June 30, 2020, as most passengers stayed home. The report also describes the measures TLC took to help including utilizing drivers as part of the City food relief program and also connect drivers with other available government support.
+
+Due to COVID-19 and its impact on the daily operations of small businesses, TLC granted smaller bases an extension on trip record submissions. This report only includes trip and trip-related data from Yellow Taxi, Street-Hail Livery and High Volume For-Hire Services.
 
 # Univariate vs Bivariate and Graphical vs Non-Graphical
 
