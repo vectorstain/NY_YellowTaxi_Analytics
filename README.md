@@ -118,7 +118,7 @@ Due to COVID-19 and its impact on the daily operations of small businesses, TLC 
 * Think about making categorical variables out of continuous variables by cutting them into bins.
 
 
-#Definitive Schema description
+# Definitive Schema description
 
 | Field Name            | Description                                                                                                                             |
 |-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
