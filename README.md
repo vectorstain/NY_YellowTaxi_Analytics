@@ -86,7 +86,7 @@ This schema reports the details of each borough.
 * * Just like it was described above to make a 0/1 column for outliers, you can do the same for any other finding
 * You can drop the duplicated rows or you can make a binary column labeling them. 
 * Same for rows that do not have a correct calculation.
-
+* In the fare amount some values can be negative. These values can belong to payment_type 4, 5 or 6
 
 ## Research
 Beginning in March 2020, New York City faced an unprecedented public health crisis as most of the City's economy paused to slow the spread of COVID-19. This report summarizes the effects of the COVID-19 pause on TLC-regulated industries from March 15 – June 30, 2020, as most passengers stayed home. The report also describes the measures TLC took to help including utilizing drivers as part of the City food relief program and also connect drivers with other available government support.
