@@ -63,6 +63,12 @@ The initial data set has 6405008 rows and 19 colums.
 | Congestion_Surcharge  | float64        | [-2.5,...,2.75]                 |
 | Airport_fee           | object         | Nan                             |
 
+The following graph highlights the NaN values in the schema:
+<br>
+<p align="center">
+<img src="./data/out/yt_2020_01_nulls_values_for_each_colum.png">
+</p>
+
 ## Connected schema
 This schema reports the details of each borough. 
 
