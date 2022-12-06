@@ -116,5 +116,5 @@ For each invalid or NaN or untidy field we are going to proceed as follow:
 - If the fare_amount is negative the row will be deleted.
 - If the congestion_surcharge is negative the row will be deleted. 
 
-Also we found 12949 duplicated row that was deleted.
+Also we found 12949 duplicated rows that was deleted.
 
