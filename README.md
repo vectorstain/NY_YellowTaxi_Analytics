@@ -97,3 +97,28 @@ Due to COVID-19 and its impact on the daily operations of small businesses, TLC 
 | Payment_type          | A numeric code signifying how the passenger paid for the trip. 1=Credit card, 2=Cash, 3=No charge, 4=Dispute, 5=Unknown, 6=Voided trip. |
 | Fare_amount           | The time-and-distance fare calculated by the meter.                                                                                     |
 | Congestion_Surcharge  | Total amount collected in trip for NYS congestion surcharge.                                                                            |
+
+
+## Missing Valus or not valid values and data tidy analysis
+| Field Name           | Invalid Values  | Null Values |
+|----------------------|-----------------|-------------|
+| Passenger_count      | 0               | True        |
+| Trip_distance        | 0               | False       |
+| PULocationID         | NV              | True        |
+| DOLocationID         | NV              | True        |
+| Fare_amount          | Negative amount | False       |
+| Congestion_Surcharge | Negative amount | True        |
+
+For each invalid or NaN or untidy field we are going to proceed as follow:
+- If passenger_count is 0 or NaN the row will be deleted.
+- If trip_distance equal 0 and PULocationID is different from DOLocationID we will substitude the trip_distance with the average trip distance between the borough, else the row will be deleted.
+- If PULocation or DOLocation is NaN or NV we are going to choose two district with similar average path.
+- If the fare_amount is negative the row will be deleted.
+- If the congestion_surcharge is negative the row will be deleted. 
+
+* Find number of missing values per column
+* Chech if data is tidy
+* Lots of data gets accidentally duplicated. Check for duplicates or near duplicates of rows and columns
+* * Just like it was described above to make a 0/1 column for outliers, you can do the same for any other finding
+* You can drop the duplicated rows or you can make a binary column labeling them. 
+
