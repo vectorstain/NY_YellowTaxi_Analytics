@@ -32,11 +32,3 @@
 * Know the shape of the distribution
 * Think about making categorical variables out of continuous variables by cutting them into bins.
 
-## Missing Valus or not valid values and data tidy analysis 
-* Find number of missing values per column
-* Chech if data is tidy
-* Lots of data gets accidentally duplicated. Check for duplicates or near duplicates of rows and columns
-* * Just like it was described above to make a 0/1 column for outliers, you can do the same for any other finding
-* You can drop the duplicated rows or you can make a binary column labeling them. 
-* Same for rows that do not have a correct calculation.
-* In the fare amount some values can be negative. These values can belong to payment_type 4, 5 or 6

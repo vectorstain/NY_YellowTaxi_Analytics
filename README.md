@@ -99,7 +99,7 @@ Due to COVID-19 and its impact on the daily operations of small businesses, TLC 
 | Congestion_Surcharge  | Total amount collected in trip for NYS congestion surcharge.                                                                            |
 
 
-## Missing Valus or not valid values and data tidy analysis
+## Missing Valus or not valid values and data tidy or duplicated field analysis
 | Field Name           | Invalid Values  | Null Values |
 |----------------------|-----------------|-------------|
 | Passenger_count      | 0               | True        |
@@ -116,9 +116,5 @@ For each invalid or NaN or untidy field we are going to proceed as follow:
 - If the fare_amount is negative the row will be deleted.
 - If the congestion_surcharge is negative the row will be deleted. 
 
-* Find number of missing values per column
-* Chech if data is tidy
-* Lots of data gets accidentally duplicated. Check for duplicates or near duplicates of rows and columns
-* * Just like it was described above to make a 0/1 column for outliers, you can do the same for any other finding
-* You can drop the duplicated rows or you can make a binary column labeling them. 
+Also we found 12949 duplicated row that was deleted.
 
