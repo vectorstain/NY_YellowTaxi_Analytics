@@ -118,3 +118,10 @@ For each invalid or NaN or untidy field we are going to proceed as follow:
 
 Also we found 12949 duplicated rows that was deleted.
 
+
+## Data Boxplot
+<br>
+<p align="center">
+<img src="./data/out/boxplot_formatted.png">
+</p>
+
