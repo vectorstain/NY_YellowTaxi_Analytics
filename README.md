@@ -1,4 +1,9 @@
 # NYc Yellow Taxi Analytics
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_map_with_bg.png">
+</p>
+
 From data collected by NYC about taxi trips, we'll extract some useful analytics about the average cost of trips through several districts in the city of NY.
 
 This project is developed by:
