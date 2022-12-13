@@ -125,3 +125,29 @@ Also we found 12949 duplicated rows that was deleted.
 <img src="./data/out/boxplot_formatted.png">
 </p>
 
+## Data Bar Chart
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_barchart.png">
+</p>
+
+## Data Bar Plot
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_barplot.png">
+</p>
+
+## Data Heat Map
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_heatmap.png">
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_heatmap_v2.png">
+</p>
+
+## Data Scatter Plot
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_scatterplot.png">
+</p>
