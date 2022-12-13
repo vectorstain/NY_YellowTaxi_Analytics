@@ -87,7 +87,7 @@ Due to COVID-19 and its impact on the daily operations of small businesses, TLC 
 # Definitive Schema description
 
 | Field Name            | Description                                                                                                                             |
-|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | tpep_pickup_datetime  | The date and time when the meter was engaged.                                                                                           |
 | tpep_dropoff_datetime | The date and time when the meter was disengaged.                                                                                        |
 | Passenger_count       | The number of passengers in the vehicle.                                                                                                |
@@ -101,20 +101,27 @@ Due to COVID-19 and its impact on the daily operations of small businesses, TLC 
 
 ## Missing Valus or not valid values and data tidy or duplicated field analysis
 | Field Name           | Invalid Values  | Null Values |
-|----------------------|-----------------|-------------|
+| -------------------- | --------------- | ----------- |
 | Passenger_count      | 0               | True        |
 | Trip_distance        | 0               | False       |
-| PULocationID         | NV              | True        |
-| DOLocationID         | NV              | True        |
+| PULocationID         | NV, Unknow      | True        |
+| DOLocationID         | NV, Unknow      | True        |
 | Fare_amount          | Negative amount | False       |
 | Congestion_Surcharge | Negative amount | True        |
 
 For each invalid or NaN or untidy field we are going to proceed as follow:
 - If passenger_count is 0 or NaN the row will be deleted.
-- If trip_distance equal 0 and PULocationID is different from DOLocationID we will substitude the trip_distance with the average trip distance between the borough, else the row will be deleted.
-- If PULocation or DOLocation is NaN or NV we are going to choose two district with similar average path.
+- If trip_distance equal 0 and tpep_dropoff_datetime-tpep_pickup_datetime is minor than 600s the row will be removed else we will substitude the trip_distance with the average trip distance between the borough.
+- If PULocation or DOLocation is NaN or NV or Unknown we are going to choose two district with similar average path or a trip with similar duration.
 - If the fare_amount is negative the row will be deleted.
 - If the congestion_surcharge is negative the row will be deleted. 
 
 Also we found 12949 duplicated rows that was deleted.
+
+
+## Data Boxplot
+<br>
+<p align="center">
+<img src="./data/out/boxplot_formatted.png">
+</p>
 
