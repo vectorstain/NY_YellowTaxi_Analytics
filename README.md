@@ -12,6 +12,21 @@ This project is developed by:
 
 under the supervision of Professor Guarrasi Valerio.
 
+# How It Work?
+To work with this python project use conda to generate a virtual environment. You can find conda [here](https://docs.conda.io/projects/conda/en/stable/).
+
+After you have installed it, digit this command in your terminal to create conda env.
+
+```shell
+foo@bar:~$ conda create -f env.yml
+```
+
+After that activate the environment.
+
+```shell
+foo@bar:~$ conda activate yt_nyc_env
+```
+
 ## What process generates this data?
 The data used in the attached datasets were collected and provided to the NYC Taxi and Limousine Commission (TLC) by technology providers authorized under the Taxicab & Livery Passenger Enhancement Programs (TPEP/LPEP).
 
