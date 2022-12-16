@@ -3,7 +3,7 @@ import pandas as pd
 YT_TRIP_DATASET_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_"
 TAXI_ZONE_LOOKUP_DATASET_URL="https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv"
 
-def readByYearMonthBorough(year: int,month: int,borough: str) -> pd.DataFrame:
+def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFrame:
     '''This func download the specified yellow taxi data set from TLC website.
 
     Parameters:
