@@ -3,7 +3,7 @@ from utilities.read_data import readBoroughTripsByYearMonth
 
 if __name__ == "__main__":
     # Read the dataset
-    df = reaBoroughTripsByYearMonth(2022,1,"Bronx")
+    df = readBoroughTripsByYearMonth(2022,1,"Bronx")
 
     # Clean the dataset
 
