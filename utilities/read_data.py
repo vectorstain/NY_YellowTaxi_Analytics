@@ -34,13 +34,15 @@ def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFra
     df = pd.read_parquet(DATA_URL)
     
     #Merged the two dataframes on PULocationID and DOLocationID
-    df = pd.merge(df,zone_lookup_df[["LocationID","Borough"]],left_on="PULocationID",right_on="LocationID")
+    df = pd.merge(df,zone_lookup_df[["LocationID","Borough","Zone"]],left_on="PULocationID",right_on="LocationID")
     df.rename(columns={"Borough":"PULocation"}, inplace=True)
+    df.rename(columns={"Zone":"PULocationZone"}, inplace=True)
     df.drop('PULocationID', axis=1, inplace=True)
     df.drop('LocationID', axis=1, inplace=True)
 
-    df = pd.merge(df,zone_lookup_df[["LocationID","Borough"]],left_on="DOLocationID",right_on="LocationID")
+    df = pd.merge(df,zone_lookup_df[["LocationID","Borough","Zone"]],left_on="DOLocationID",right_on="LocationID")
     df.rename(columns={"Borough":"DOLocation"}, inplace=True)
+    df.rename(columns={"Zone":"DOLocationZone"}, inplace=True)
     df.drop('DOLocationID', axis=1, inplace=True)
     df.drop('LocationID', axis=1, inplace=True)
 
