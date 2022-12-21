@@ -53,19 +53,32 @@ def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFra
     df = df.reset_index(drop=True)
     return df
 
-def readUserInput() -> [int,int,str]:
+def readUserInput() -> list:
+    '''This func read the user input.
+
+    Parameters:
+    year (int): The year you would analyzed, e.g. 2020 2021 2022.
+    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
+    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+
+    Returns:
+    list :Return a list of @year, @month, @borough .
+    '''
     contition = False
-    while !contition:
+    while  contition == False :
         default_year="2020"
-        year = (input("Type the year number): ") != "" or default_year )
+        year = (input("Type the year number: ")  )
+
+        print(year)
+        print(type(year))
         
         if year and year.isdigit():
             if int(year) >=2010 and int(year) <=2022:
                 condition = True
     
-    default_month="1"
+    default_month=1
     contition = False
-    while !contition:
+    while not contition:
         default_month="1"
         month = (input("Type the month number): ") != "" or default_month )
         
@@ -76,7 +89,7 @@ def readUserInput() -> [int,int,str]:
     default_borough="Bronx"
     contition = False
     borough_list = ['EWR', 'Queens', 'Bronx', 'Manhattan', 'Staten Island', 'Brooklyn']
-    while !contition:
+    while not contition:
         default_borough="Bronx"
         borough = (input("Type borough): ") != "" or default_borough )
 
