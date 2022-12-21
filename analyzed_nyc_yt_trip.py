@@ -1,13 +1,12 @@
 # Local Utilities
-from utilities.read_data import readBoroughTripsByYearMonth
+from utilities.read_data import readBoroughTripsByYearMonth, readUserInput
 from utilities.clean_data import getCleanedDataFrame
 from utilities.analyze_data import computeAverageFareAmountPerMile, computeAverageFareAmountPerMileInTime
+
+
 if __name__ == "__main__":
 
-    # read user input
-    year=2020
-    month=1
-    borough="Bronx"
+    year,month,borough = readUserInput()
 
     # Read the dataset
     df = readBoroughTripsByYearMonth(year,month,borough)

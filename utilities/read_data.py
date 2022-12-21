@@ -52,3 +52,37 @@ def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFra
     #Reindex the returned dataframe
     df = df.reset_index(drop=True)
     return df
+
+def readUserInput() -> [int,int,str]:
+    contition = False
+    while !contition:
+        default_year="2020"
+        year = (input("Type the year number): ") != "" or default_year )
+        
+        if year and year.isdigit():
+            if int(year) >=2010 and int(year) <=2022:
+                condition = True
+    
+    default_month="1"
+    contition = False
+    while !contition:
+        default_month="1"
+        month = (input("Type the month number): ") != "" or default_month )
+        
+        if month and month.isdigit():
+            if int(month) >=1 and int(month) <=12:
+                condition = True
+
+    default_borough="Bronx"
+    contition = False
+    borough_list = ['EWR', 'Queens', 'Bronx', 'Manhattan', 'Staten Island', 'Brooklyn']
+    while !contition:
+        default_borough="Bronx"
+        borough = (input("Type borough): ") != "" or default_borough )
+
+        if borough in borough_list:
+            condition = True
+    
+    return [year,month,borough]
+            
+
