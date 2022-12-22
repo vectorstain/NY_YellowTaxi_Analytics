@@ -6,6 +6,7 @@ from utilities.analyze_data import computeAverageFareAmountPerMile, computeAvera
 
 if __name__ == "__main__":
 
+    # Get user input
     year,month,borough = readUserInput()
 
     # Read the dataset
