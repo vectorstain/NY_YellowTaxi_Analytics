@@ -13,7 +13,7 @@ def computeAverageFareAmountPerMile(df: pd.DataFrame) -> float:
     '''
 
     #Lets compute
-    df["PM"]=pd.Series({})
+    df["PM"]=pd.Series({}, dtype='float64')
     df["PM"]=df.apply(lambda x: x["fare_amount"]/x["trip_distance"], axis=1)
 
     AVG = df["PM"].mean()
@@ -33,7 +33,7 @@ def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> float:
     '''
 
     #Lets compute
-    df["PMT"]=pd.Series({})
+    df["PMT"]=pd.Series({}, dtype='float64')
     df["PMT"]=df.apply(lambda x: (x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"]), axis=1)
 
     AVG = df["PMT"].mean()
