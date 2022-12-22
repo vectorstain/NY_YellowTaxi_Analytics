@@ -1,7 +1,11 @@
 import pandas as pd
+import os
 
 YT_TRIP_DATASET_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_"
 TAXI_ZONE_LOOKUP_DATASET_URL="https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv"
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFrame:
     '''This func download the specified yellow taxi data set from TLC website.
@@ -55,47 +59,56 @@ def readBoroughTripsByYearMonth(year: int,month: int,borough: str) -> pd.DataFra
 
 def readUserInput() -> list:
     '''This func read the user input.
-
-    Parameters:
-    year (int): The year you would analyzed, e.g. 2020 2021 2022.
-    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
-    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
-
     Returns:
-    list :Return a list of @year, @month, @borough .
+    year: A valid year of type int, 
+    month: A valid month of type int,
+    borough: A valid borough of type str.
     '''
-    contition = False
-    while  contition == False :
+    condition = False
+    while  not condition :
         default_year="2020"
-        year = (input("Type the year number: ")  )
+        year = (lambda x=input("\nType the year number:"): x if x != "" else default_year)()
 
-        print(year)
-        print(type(year))
-        
         if year and year.isdigit():
-            if int(year) >=2010 and int(year) <=2022:
+            if int(year) >=2009 and int(year) <=2022:
                 condition = True
+            else:
+                print(f"The typed year \'{year}\' is invalid, should be in the range between 2010 and 2022")
+        else:
+            print(f"The typed value shoul be a number")
+    # now, to clear the screen
+    cls()
     
     default_month=1
-    contition = False
-    while not contition:
+    condition = False
+    while not condition:
         default_month="1"
-        month = (input("Type the month number): ") != "" or default_month )
+        month = (lambda x=input("\nType the month number:"): x if x != "" else default_month)()
         
         if month and month.isdigit():
             if int(month) >=1 and int(month) <=12:
                 condition = True
+            else:
+                print(f"The typed month \'{month}\' is invalid, should be in the range between 1 and 12")
+        else:
+            print(f"The typed value shoul be a number")
+    # now, to clear the screen
+    cls()
 
     default_borough="Bronx"
-    contition = False
+    condition = False
     borough_list = ['EWR', 'Queens', 'Bronx', 'Manhattan', 'Staten Island', 'Brooklyn']
-    while not contition:
+    while not condition:
         default_borough="Bronx"
-        borough = (input("Type borough): ") != "" or default_borough )
-
+        borough = (lambda x=input("\nType a borough:"): x if x != "" else default_borough)()
+        
         if borough in borough_list:
             condition = True
+        else:
+            print(f"The typed borough \'{borough}\' is invalid, should be one of {borough_list}")
+    # now, to clear the screen
+    cls()
     
-    return [year,month,borough]
+    return [int(year),int(month),str(borough)]
             
 
