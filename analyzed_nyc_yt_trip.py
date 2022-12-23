@@ -2,6 +2,7 @@
 from utilities.read_data import readBoroughTripsByYearMonth, readUserInput
 from utilities.clean_data import getCleanedDataFrame
 from utilities.analyze_data import computeAverageFareAmountPerMile, computeAverageFareAmountPerMileInTime
+from utilities.write_output_report import createPdfReport
 
 
 if __name__ == "__main__":
@@ -10,12 +11,16 @@ if __name__ == "__main__":
     year,month,borough = readUserInput()
 
     # Read the dataset
-    df = readBoroughTripsByYearMonth(year,month,borough)
+    #df = readBoroughTripsByYearMonth(year,month,borough)
 
     # Clean the dataset
-    df = getCleanedDataFrame(df)
+    #df = getCleanedDataFrame(df)
 
     # Analyzed the dataset
-    print(f"The average PM is:{computeAverageFareAmountPerMile(df)}")
-    print(f"The average PMT is:{computeAverageFareAmountPerMileInTime(df)}")
+    #print(f"The average PM is:{computeAverageFareAmountPerMile(df)}")
+    #print(f"The average PMT is:{computeAverageFareAmountPerMileInTime(df)}")
+
+
+
     # Print/Save report/analysis
+    createPdfReport(year,month,borough)
