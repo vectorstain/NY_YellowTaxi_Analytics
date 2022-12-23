@@ -15,16 +15,27 @@ under the supervision of Professor Guarrasi Valerio.
 # How It Work?
 To work with this python project use conda to generate a virtual environment. You can find conda [here](https://docs.conda.io/projects/conda/en/stable/).
 
+## Manual installation
 After you have installed it, digit this command in your terminal to create conda env.
 
 ```shell
-foo@bar:~$ conda create -f env.yml
+foo@bar:~$ conda env create -f env.yml
 ```
 
 After that activate the environment.
 
 ```shell
-foo@bar:~$ conda activate yt_nyc_env
+foo@bar:~$ conda activate yt_env
+```
+And install fpdf package via pip:
+```shell
+foo@bar:~$ pip install fpdf
+```
+
+## Automatic installation
+Or if you use a linux base terminal with conda already install you can run install.sh script: 
+```shell
+foo@bar:~$ source install.sh
 ```
 
 ## What process generates this data?
