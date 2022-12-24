@@ -1,15 +1,15 @@
 import pandas as pd
+import numpy as np
 
 def computeAverageFareAmountPerMile(df: pd.DataFrame) -> list:
-    '''This func download the specified yellow taxi data set from TLC website.
+    '''This func compute the prize per mile for each row of the passed dataframe.
 
     Parameters:
-    year (int): The year you would analyzed, e.g. 2020 2021 2022.
-    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
-    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+    pandas.Dataframe : The dataframe which you want to conduct prize per mile analysis.
 
     Returns:
-    pandas.core.frame.DataFrame :Return the pandas df of @year, @month, @borough selected.
+    float :Return the avg prize per mile
+    pandas.DataFrame :Return the data frame with PM compute for each row
     '''
 
     #Lets compute
@@ -18,24 +18,23 @@ def computeAverageFareAmountPerMile(df: pd.DataFrame) -> list:
 
     AVG = df["PM"].mean()
 
-    return AVG, df
+    return [float(AVG), df]
 
 def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> list:
-    '''This func download the specified yellow taxi data set from TLC website.
+    '''This func compute the prize per mile per time for each row of the passed dataframe.
 
     Parameters:
-    year (int): The year you would analyzed, e.g. 2020 2021 2022.
-    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
-    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+    pandas.Dataframe : The dataframe which you want to conduct prize per mile per time analysis.
 
     Returns:
-    pandas.core.frame.DataFrame :Return the pandas df of @year, @month, @borough selected.
+    float :Return the avg prize per mile per time
+    pandas.DataFrame :Return the data frame with PMT compute for each row
     '''
 
     #Lets compute
     df["PMT"]=pd.Series({}, dtype='float64')
-    df["PMT"]=df.apply(lambda x: (x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"]), axis=1)
+    df["PMT"]=df.apply(lambda x: ((x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])) if (x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])>0 else np.NaN , axis=1)
 
     AVG = df["PMT"].mean()
 
-    return AVG, df
+    return [float(AVG), df]
