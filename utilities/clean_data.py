@@ -111,6 +111,8 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
             rand_row_index = r.choice(similar_trips.index)
             df.at[i,"PULocationZone"] = similar_trips.at[rand_row_index,"PUL"]
             df.at[i,"DOLocationZone"] = similar_trips.at[rand_row_index,"DOL"]
+            df.at[i,"PULocation"] = similar_trips.at[rand_row_index,"PULBorough"]
+            df.at[i,"DOLocation"] = similar_trips.at[rand_row_index,"DOLBorough"]
         else:
             df.drop(i,inplace=True)
     print(f"Removed rows where PUL/DOL zone is eq to NV or NaN and PUL/DOL Borough is Unknows. Now df has: {len(df.index)} ")

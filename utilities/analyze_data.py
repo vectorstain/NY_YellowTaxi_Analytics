@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def computeAverageFareAmountPerMile(df: pd.DataFrame) -> float:
     '''This func download the specified yellow taxi data set from TLC website.
@@ -34,7 +35,7 @@ def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> float:
 
     #Lets compute
     df["PMT"]=pd.Series({}, dtype='float64')
-    df["PMT"]=df.apply(lambda x: (x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"]), axis=1)
+    df["PMT"]=df.apply(lambda x: ((x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])) if (x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])>0 else np.NaN , axis=1)
 
     AVG = df["PMT"].mean()
 
