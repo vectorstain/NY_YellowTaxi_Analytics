@@ -1,6 +1,6 @@
 import pandas as pd
 
-def computeAverageFareAmountPerMile(df: pd.DataFrame) -> float:
+def computeAverageFareAmountPerMile(df: pd.DataFrame) -> list:
     '''This func download the specified yellow taxi data set from TLC website.
 
     Parameters:
@@ -18,9 +18,9 @@ def computeAverageFareAmountPerMile(df: pd.DataFrame) -> float:
 
     AVG = df["PM"].mean()
 
-    return AVG
+    return AVG, df
 
-def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> float:
+def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> list:
     '''This func download the specified yellow taxi data set from TLC website.
 
     Parameters:
@@ -38,4 +38,4 @@ def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> float:
 
     AVG = df["PMT"].mean()
 
-    return AVG
+    return AVG, df

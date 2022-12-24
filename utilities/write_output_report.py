@@ -1,4 +1,7 @@
 from fpdf import FPDF
+import pandas as pd
+from .graph_data import graphPMTBoxplot, graphPMBoxplot
+
 
 class PDF(FPDF):
     def header(self):
@@ -30,7 +33,7 @@ class PDF(FPDF):
         # Page number
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
-def createPdfReport(year:int,month:int,borough:str):
+def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
     # Instantiation of inherited class
     pdf = PDF()
     
@@ -41,7 +44,13 @@ def createPdfReport(year:int,month:int,borough:str):
     pdf.alias_nb_pages()
 
     # Insert Images
+    PMT_boxplot_png_path = graphPMTBoxplot(df, year, month, borough)
+    print(PMT_boxplot_png_path)
 
+    PM_boxplot_png_path = graphPMBoxplot(df, year, month, borough)
+    print(PM_boxplot_png_path)
+
+    
     # Insert descriptions
 
     # Save the report file
