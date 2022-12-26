@@ -1,6 +1,6 @@
 from fpdf import FPDF
 import pandas as pd
-from .graph_data import graphPMTBoxplot, graphPMBoxplot
+from .graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
 
 
 class PDF(FPDF):
@@ -50,7 +50,14 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
     PM_boxplot_png_path = graphPMBoxplot(df, year, month, borough)
     print(PM_boxplot_png_path)
 
-    
+    PM_barchart_png_path = graphPMBarchart(df, year, month, borough)
+    print(PM_barchart_png_path)
+
+    fare_amount_over_tripdist_over_pgcount_scatterplot_png_path = graphFareAmountOverTripDistOverPgCountScatterplot(df, year, month, borough)
+    print(fare_amount_over_tripdist_over_pgcount_scatterplot_png_path)
+
+    pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
+    print(pg_count_over_borough_zone_heatmap_png_path)
     # Insert descriptions
 
     # Save the report file

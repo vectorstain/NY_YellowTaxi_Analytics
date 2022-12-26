@@ -33,7 +33,7 @@ def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> list:
 
     #Lets compute
     df["PMT"]=pd.Series({}, dtype='float64')
-    df["PMT"]=df.apply(lambda x: ((x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])) if (x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])>0 else np.NaN , axis=1)
+    df["PMT"]=df.apply(lambda x: ((x["fare_amount"]/x["trip_distance"])/(x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"]))*1000000 if (x["tpep_dropoff_datetime"]-x["tpep_pickup_datetime"])>0 else np.NaN , axis=1)
 
     AVG = df["PMT"].mean()
 
