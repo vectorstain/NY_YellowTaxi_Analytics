@@ -8,7 +8,7 @@ def graphPMTBoxplot(df: pandas.DataFrame, year:int, month: int, borough: str) ->
     data=df,
     x="PMT", y="PULocation", row="DOLocation",
     kind="box", orient="h",
-    sharex=False, margin_titles=True
+    sharex=True, margin_titles=True
     )
     
     FILE_NAME=f'./data/out/yt_of_{month}_{year}_from_{borough}_PMT_boxplot.png'
