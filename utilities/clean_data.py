@@ -5,6 +5,21 @@ TAXI_ZONE_LOOKUP_DATASET_URL="https://d37ci6vzurychx.cloudfront.net/misc/taxi+_z
 
 
 def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
+    '''This func removes messy rows in dataframe. 
+    - Drops duplicated rows.
+    - Drops rows where passenger_count is eq. to 0 or is NaN.
+    - Drops rows where fare_amount is less then 0.
+    - Drops rows where congestion_surcharge is less then 0.
+    - Drops rows where trip_distance == 0 and trip duration is less 5 minuts.
+    - Substitute rows where trip_distance eq. 0 with avg trip dist. of same trip.
+    - Drop rows where doesnt exist alternative trip.
+
+    Parameters:
+    pandas.Dataframe : The dataframe which you want to conduct prize per mile analysis.
+
+    Returns:
+    pandas.DataFrame :Return the data cleaned.
+    '''
     
     print(f"Starting with {len(df.index)} rows.")
     
@@ -69,7 +84,7 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
     avg_trip_df.rename(columns={"Borough":"DOLBorough"}, inplace=True)
     avg_trip_df.drop_duplicates(inplace=True)
 
-    #Lets find others accorency where trip_distance is equal to 0s
+    #Lets find others occurency where trip_distance is equal to 0s
     null_trip = df.loc[(df['trip_distance'] == 0)]
 
     #Let's take the null_trips considered above and replace the values ​​that have trip_distance == 0 or NaN with the AVG_TRIP of the route
@@ -77,7 +92,6 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
         PULL=null_trip["PULocationZone"][i]
         DOL=null_trip["DOLocationZone"][i]
         AVG=avg_trip_df.loc[(avg_trip_df["PUL"]==PULL)&(avg_trip_df["DOL"]==DOL)]["AVG_TRIP"]
-        #print(f"AVG{AVG.to_list()},PUL:{PUL},DOL:{DOL}")
 
         if (AVG.any()):
             df.at[i,"trip_distance"] = AVG
@@ -85,6 +99,11 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
             df.drop(i,inplace=True)
     print(f"Removed rows where  trip_distance == 0 and doesnt exist an alternative trip. Now df has: {len(df.index)} ")
 
+    #df, avg_trip_df = replaceUnkownTripRecord(df,avg_trip_df)
+
+    return df
+
+def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> list:
 
     avg_trip_df.drop(avg_trip_df.loc[(avg_trip_df["PUL"]=="NV")|(avg_trip_df["DOL"]=="NV")].index, inplace=True)
     avg_trip_df.drop(avg_trip_df.loc[(avg_trip_df["PUL"].isna())|(avg_trip_df["DOL"].isna())].index, inplace=True)
@@ -117,7 +136,7 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
             df.drop(i,inplace=True)
     print(f"Removed rows where PUL/DOL zone is eq to NV or NaN and PUL/DOL Borough is Unknows. Now df has: {len(df.index)} ")
 
-    return df
+    return [df, avg_trip_df]
 
 
 def fromDateTimeToTimestamp(df: pd.DataFrame) -> pd.DataFrame:
