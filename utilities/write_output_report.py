@@ -1,7 +1,8 @@
 from fpdf import FPDF
 import pandas as pd
 from .graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
-
+from utilities.clean_data import getCleanedDataFrame
+from utilities.analyze_data import computeAverageFareAmountPerMile, computeAverageFareAmountPerMileInTime
 
 class PDF(FPDF):
     def header(self):
@@ -58,6 +59,14 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
 
     pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
     print(pg_count_over_borough_zone_heatmap_png_path)
+
+    # Report the analyzed of dataset
+    PM_AVG,df = computeAverageFareAmountPerMile(df)
+    print(f"The average PM is:{PM_AVG}")
+    
+    PMT_AVG,df=computeAverageFareAmountPerMileInTime(df)
+    print(f"The average PMT is:{PMT_AVG}")
+
     # Insert descriptions
 
     # Save the report file
