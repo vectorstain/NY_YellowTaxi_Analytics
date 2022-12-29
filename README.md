@@ -44,7 +44,7 @@ The data used in the attached datasets were collected and provided to the NYC Ta
 You can find the data set at this [link](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) 
 
 ## When was it created?
-On a first analysis we are going to examinate data collects on January 2022, you can find the data set [here](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2020-01.parquet)
+On a first analysis we are going to examinate data collects on January 2020, you can find the data set [here to download](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2020-01.parquet)
 
 ## Schema description
 | Field Name            | Description                                                                                                                                                                                                                                          |

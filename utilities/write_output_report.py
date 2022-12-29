@@ -1,10 +1,11 @@
 from fpdf import FPDF
 import pandas as pd
-from .graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
-from utilities.clean_data import getCleanedDataFrame
+from utilities.graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
+#from utilities.clean_data import getCleanedDataFrame
 from utilities.analyze_data import computeAverageFareAmountPerMile, computeAverageFareAmountPerMileInTime
 
 class PDF(FPDF):
+    
     def header(self):
 
         # Arial bold 15
@@ -34,12 +35,28 @@ class PDF(FPDF):
         # Page number
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
+    #Page body
+    def body(self, images:list, description:str):
+        if len(images) == 1:
+            self.image(images[0], 15, 25, self.WIDTH - 30)
+            self.image(images[1], 15, self.WIDTH / 2 + 5, self.WIDTH - 30)
+            self.image(images[2], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
+            self.image(images[3], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
+            self.image(images[4], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
+        
+        self.cell(40, 10, "In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough.\nAll of this was made visible by boxplots.")
+
+    
 def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
+
     # Instantiation of inherited class
     pdf = PDF()
     
     # Write the title
     pdf.set_title(f"Yellow Taxi Trip Report of {month}/{year} from {borough}")
+
+    #Write the Author
+    pdf.set_author('Vittorio Maria Calendra\n Eleonora Papa')
 
     #Write the footer
     pdf.alias_nb_pages()
@@ -68,8 +85,9 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
     print(f"The average PMT is:{PMT_AVG}")
 
     # Insert descriptions
-    description = 'In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough of {borough}.\n All of this was made visible by boxplots.'
+    description = 'In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough.\nAll of this was made visible by boxplots.'
     print(description)
+              
 
     # Save the report file
     pdf.output(f'./data/out/yt_report_of_{month}_{year}_from_{borough}.pdf', 'F')
