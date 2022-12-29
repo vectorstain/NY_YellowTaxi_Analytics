@@ -68,6 +68,8 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
     print(f"The average PMT is:{PMT_AVG}")
 
     # Insert descriptions
+    description = 'In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough of {borough}.\n All of this was made visible by boxplots.'
+    print(description)
 
     # Save the report file
     pdf.output(f'./data/out/yt_report_of_{month}_{year}_from_{borough}.pdf', 'F')
