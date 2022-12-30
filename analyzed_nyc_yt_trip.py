@@ -22,7 +22,5 @@ if __name__ == "__main__":
     PMT_AVG,df=computeAverageFareAmountPerMileInTime(df)
     print(f"The average PMT is:{PMT_AVG}")
 
-
-
     # Print/Save report/analysis
-    createPdfReport(df, year,month,borough)
+    createPdfReport(df, year,month,borough, PM_AVG, PMT_AVG)

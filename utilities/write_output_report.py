@@ -34,7 +34,7 @@ class PDF(FPDF):
         # Page number
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
-def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
+def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float, PMT:float):
     # Instantiation of inherited class
     pdf = PDF()
     
@@ -60,16 +60,18 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
     pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
     print(pg_count_over_borough_zone_heatmap_png_path)
 
-    # Report the analyzed of dataset
-    PM_AVG,df = computeAverageFareAmountPerMile(df)
-    print(f"The average PM is:{PM_AVG}")
-    
-    PMT_AVG,df=computeAverageFareAmountPerMileInTime(df)
-    print(f"The average PMT is:{PMT_AVG}")
-
     # Insert descriptions
     description = 'In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough of {borough}.\n All of this was made visible by boxplots.'
     print(description)
+
+    pdf.add_page()
+    pdf.image(pg_count_over_borough_zone_heatmap_png_path, x=10, y=20, w=80, type='PNG')
+    pdf.text(x=90,y=30,txt="Here")
+    pdf.set_xy(90,30)
+    pdf.write(h=30,txt="PIPPO")
+    pdf.set_xy(30,30)
+    pdf.cell( w = 120, h = 90, txt = 'PIPPO', border = 1, ln = 1, 
+          align = 'C', fill = False)
 
     # Save the report file
     pdf.output(f'./data/out/yt_report_of_{month}_{year}_from_{borough}.pdf', 'F')
