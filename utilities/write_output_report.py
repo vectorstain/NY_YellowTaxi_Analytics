@@ -1,8 +1,6 @@
 from fpdf import FPDF
 import pandas as pd
 from utilities.graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
-#from utilities.clean_data import getCleanedDataFrame
-from utilities.analyze_data import computeAverageFareAmountPerMile, computeAverageFareAmountPerMileInTime
 
 class PDF(FPDF):
     
@@ -36,18 +34,26 @@ class PDF(FPDF):
         self.cell(0, 10, 'Page ' + str(self.page_no()) + '/{nb}', 0, 0, 'C')
 
     #Page body
-    def body(self, images:list, description:str):
-        if len(images) == 1:
-            self.image(images[0], 15, 25, self.WIDTH - 30)
-            self.image(images[1], 15, self.WIDTH / 2 + 5, self.WIDTH - 30)
-            self.image(images[2], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
-            self.image(images[3], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
-            self.image(images[4], 15, self.WIDTH / 2 + 90, self.WIDTH - 30)
-        
-        self.cell(40, 10, "In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough.\nAll of this was made visible by boxplots.")
+    def first_pg_body(self, images:list, description:str):
+
+        if len(images) == 5:
+            self.add_page()
+            self.image(images[0], x=10, y=20, w=40, type='PNG')
+            self.image(images[1], x=50, y=20, w=40, type='PNG')
+            self.set_font('Arial', '', 7)
+
+            self.set_xy(90,30)
+            txt='The boxplot on the left graph shows how changes trip prize per mile in time unit from a common start borough.\n'
+            txt+='On the right boxplot instead we graph the general prize per mile from a common start borough.\n'
+            txt+=description
+            self.multi_cell( w = 110, h = 5, txt = txt, border = 1, align = 'J', fill = False)
+
+            self.image(images[2], x=95, y=56, w=100, type='PNG')
+            self.image(images[3], x=95, y=126, w=100, type='PNG')
+            self.image(images[4], x=95, y=200, w=100, type='PNG')
 
     
-def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
+def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float, PMT:float):
 
     # Instantiation of inherited class
     pdf = PDF()
@@ -60,34 +66,18 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str):
 
     #Write the footer
     pdf.alias_nb_pages()
-
-    # Insert Images
-    PMT_boxplot_png_path = graphPMTBoxplot(df, year, month, borough)
-    print(PMT_boxplot_png_path)
-
-    PM_boxplot_png_path = graphPMBoxplot(df, year, month, borough)
-    print(PM_boxplot_png_path)
-
-    PM_barchart_png_path = graphPMBarchart(df, year, month, borough)
-    print(PM_barchart_png_path)
-
-    fare_amount_over_tripdist_over_pgcount_scatterplot_png_path = graphFareAmountOverTripDistOverPgCountScatterplot(df, year, month, borough)
-    print(fare_amount_over_tripdist_over_pgcount_scatterplot_png_path)
-
-    pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
-    print(pg_count_over_borough_zone_heatmap_png_path)
-
-    # Report the analyzed of dataset
-    PM_AVG,df = computeAverageFareAmountPerMile(df)
-    print(f"The average PM is:{PM_AVG}")
     
-    PMT_AVG,df=computeAverageFareAmountPerMileInTime(df)
-    print(f"The average PMT is:{PMT_AVG}")
+    # Generate graph
+    PMT_boxplot_png_path = graphPMTBoxplot(df, year, month, borough)
+    PM_boxplot_png_path = graphPMBoxplot(df, year, month, borough)
+    PM_barchart_png_path = graphPMBarchart(df, year, month, borough)
+    fare_amount_over_tripdist_over_pgcount_scatterplot_png_path = graphFareAmountOverTripDistOverPgCountScatterplot(df, year, month, borough)
+    pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
 
     # Insert descriptions
-    description = 'In this report we have included the average fare amount per mile and average fare amount per mile in time values ​​for the borough.\nAll of this was made visible by boxplots.'
-    print(description)
-              
+    description = f'The average prize per mile from {borough}\'s borough is: {PM};\nThe average prize per mile in time unit from {borough}\'s borough is: {PMT}\n'
+
+    pdf.first_pg_body([PMT_boxplot_png_path,PM_boxplot_png_path,PM_barchart_png_path,fare_amount_over_tripdist_over_pgcount_scatterplot_png_path,pg_count_over_borough_zone_heatmap_png_path],description)
 
     # Save the report file
     pdf.output(f'./data/out/yt_report_of_{month}_{year}_from_{borough}.pdf', 'F')
