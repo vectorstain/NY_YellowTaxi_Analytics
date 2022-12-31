@@ -4,7 +4,7 @@ import random as r
 TAXI_ZONE_LOOKUP_DATASET_URL="https://d37ci6vzurychx.cloudfront.net/misc/taxi+_zone_lookup.csv"
 
 
-def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
+def removeMessyRows(df: pd.DataFrame, trip_inference:bool) -> pd.DataFrame:
     '''This func removes messy rows in dataframe. 
     - Drops duplicated rows.
     - Drops rows where passenger_count is eq. to 0 or is NaN.
@@ -12,37 +12,55 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
     - Drops rows where congestion_surcharge is less then 0.
     - Drops rows where trip_distance == 0 and trip duration is less 5 minuts.
     - Substitute rows where trip_distance eq. 0 with avg trip dist. of same trip.
-    - Drop rows where doesnt exist alternative trip.
+    - If trip_inference is set to True drop rows where doesnt exist alternative trip.
 
     Parameters:
     pandas.Dataframe : The dataframe which you want to conduct prize per mile analysis.
+    bool : trip_inference choose if you want to try to inference Unkown trips.
 
     Returns:
-    pandas.DataFrame :Return the data cleaned.
+    pandas.DataFrame : Return the dataframe cleaned.
     '''
-    
-    print(f"Starting with {len(df.index)} rows.")
+
+    number_of_rows = len(df.index)
+
+    print(f"Starting with {number_of_rows} rows.")
     
     #Remove duplicates
     df.drop_duplicates(inplace=True)
-    print(f"Removed duplicated rows. Now df has: {len(df.index)} ")
+
+    number_of_rows -= len(df.index)
+    print(f"Removed duplicated rows: {number_of_rows} ")
+    number_of_rows = len(df.index) 
 
     #Now let's remove from from the table the rows with the passenger_count == 0 or NaN (null)
     df.drop(df[(df['passenger_count'] == 0)|(df["passenger_count"].isna())].index,inplace=True)
-    print(f"Removed rows where passenger_count eq. 0 or NaN. Now df has: {len(df.index)} ")
+
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where passenger_count eq. 0 or NaN: {number_of_rows} ")
+    number_of_rows = len(df.index) 
 
     #Now let's remove from from the table the rows with the fare_amount == 0 or NaN (null)
     df.drop(df.loc[df.fare_amount<=0].index, inplace=True)
-    print(f"Removed rows where fare_amount eq. 0 or NaN. Now df has: {len(df.index)} ")
+
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where fare_amount eq. 0 or NaN: {number_of_rows} ")
+    number_of_rows = len(df.index) 
 
     #Now let's remove from from the table the rows with the congestion_surcharge is less than 0.
     df.drop(df.loc[df.congestion_surcharge<0].index, inplace=True)
-    print(f"Removed rows where congestion_surcharge is less than 0. Now df has: {len(df.index)} ")
+
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where congestion_surcharge is less than 0: {number_of_rows} ")
+    number_of_rows = len(df.index) 
 
     #null_trip are rows where trip_distance == 0 and trip duration is under 5minuts
     null_trip = df.loc[(df['tpep_dropoff_datetime']-df['tpep_pickup_datetime']<300) & (df['trip_distance'] == 0)]
     df.drop(null_trip.index,inplace=True)
-    print(f"Removed rows where trip_distance eq. to 0 and trip time under 5 minuts. Now df has: {len(df.index)} ")
+
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where trip_distance eq. to 0 and trip time under 5 minuts: {number_of_rows} ")
+    number_of_rows = len(df.index) 
 
     #Let's see districts with unique PULocation values
     PULdistrics = df["PULocationZone"].unique()
@@ -97,16 +115,35 @@ def removeMessyRows(df: pd.DataFrame) -> pd.DataFrame:
             df.at[i,"trip_distance"] = AVG
         else:
             df.drop(i,inplace=True)
-    print(f"Removed rows where  trip_distance == 0 and doesnt exist an alternative trip. Now df has: {len(df.index)} ")
 
-    #df, avg_trip_df = replaceUnkownTripRecord(df,avg_trip_df)
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where  trip_distance == 0 and doesnt exist an alternative trip: {number_of_rows} ")
+
+    if trip_inference:
+        df = replaceUnkownTripRecord(df,avg_trip_df)
 
     return df
 
-def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> list:
+def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> pd.DataFrame:
+    '''This func tries to guess trip PUL / DOL based on trip duration and trip distance. 
+    - Drops rows where PUL/DOL location is equ. to NV or NaN.
+
+    Parameters:
+    pandas.Dataframe : The dataframe which you want to analyse.
+    pandas.Dataframe : The dataframe containing avg miles and durations of trips.
+
+    Returns:
+    pandas.DataFrame : Return the dataframe cleaned with trip inference.
+    '''
+
+    number_of_rows = len(df.index) 
 
     avg_trip_df.drop(avg_trip_df.loc[(avg_trip_df["PUL"]=="NV")|(avg_trip_df["DOL"]=="NV")].index, inplace=True)
     avg_trip_df.drop(avg_trip_df.loc[(avg_trip_df["PUL"].isna())|(avg_trip_df["DOL"].isna())].index, inplace=True)
+    
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where PUL or DOL location is eq. to NV or NaN: {number_of_rows} ")
+    number_of_rows = len(df.index) 
     
     #Lets check unkown trips
     unknow_trip = df.loc[(df['DOLocation'] == 'Unknown')|(df['PULocation'] == 'Unknown')|(df['PULocationZone'] == 'NV')|(df['PULocationZone'].isna())|(df['DOLocationZone'] == 'NV')|(df['DOLocationZone'].isna())]
@@ -126,7 +163,6 @@ def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> list
         similar_trips = avg_trip_df.query("(PUL == @PUL or DOL == @DOL) or ((AVG_TRIP>@T_DIST_LOWERB and AVG_TRIP<@T_DIST_UPPERB) and (AVG_DUR_S>@T_DUR_LOWERB and AVG_DUR_S<@T_DUR_UPPERB))")
 
         if len(similar_trips.index)>0:
-            #print(PUL+"->"+DOL+": DIS "+str(T_DIST)+" U "+str(T_DIST_UPPERB)+" L "+str(T_DIST_LOWERB)+" D "+str(T_DUR)+" U "+str(T_DUR_UPPERB)+" L "+str(T_DUR_LOWERB))    
             rand_row_index = r.choice(similar_trips.index)
             df.at[i,"PULocationZone"] = similar_trips.at[rand_row_index,"PUL"]
             df.at[i,"DOLocationZone"] = similar_trips.at[rand_row_index,"DOL"]
@@ -134,12 +170,22 @@ def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> list
             df.at[i,"DOLocation"] = similar_trips.at[rand_row_index,"DOLBorough"]
         else:
             df.drop(i,inplace=True)
-    print(f"Removed rows where PUL/DOL zone is eq to NV or NaN and PUL/DOL Borough is Unknows. Now df has: {len(df.index)} ")
 
-    return [df, avg_trip_df]
+    number_of_rows -= len(df.index)
+    print(f"Removed rows where Borough is Unknows. Now df has: {number_of_rows} ")
+
+    return df
 
 
 def fromDateTimeToTimestamp(df: pd.DataFrame) -> pd.DataFrame:
+    '''This func trasform date-time fields to timestamp
+
+    Parameters:
+    pandas.Dataframe : The dataframe which you want to analyse.
+
+    Returns:
+    pandas.DataFrame : Return the dataframe with trasformed date-time fields to timestamp.
+    '''
 
     #Lets change tpep_pickup_datetime  from  datetime64[ns] to int64
     df["tpep_pickup_datetime"] = df["tpep_pickup_datetime"].apply(lambda x: pd.Timestamp(x)).astype('int64')
@@ -149,17 +195,33 @@ def fromDateTimeToTimestamp(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def removeUselessCols(df: pd.DataFrame) -> pd.DataFrame:
+    '''This func  remove messy colums for the analysis.
+    - ['VendorID', 'RatecodeID', 'store_and_fwd_flag', 'extra', 'mta_tax','tip_amount','tolls_amount', 'improvement_surcharge', 'airport_fee']
+
+    Parameters:
+    pandas.Dataframe : The dataframe which you want to analyse.
+
+    Returns:
+    pandas.DataFrame : Return the dataframe without useles cols.
+    '''
     
     # Remove useles cols
     df.drop(['VendorID', 'RatecodeID', 'store_and_fwd_flag', 'extra', 'mta_tax','tip_amount','tolls_amount', 'improvement_surcharge', 'airport_fee'], axis=1, inplace=True)
 
     return df
 
-def getCleanedDataFrame(df: pd.DataFrame) -> pd.DataFrame:
+def getCleanedDataFrame(df: pd.DataFrame, trip_inference: bool) -> pd.DataFrame:
+    '''This func clean and trasform the dataframe for to analysis.
+
+    Parameters:
+    pandas.Dataframe : The dataframe which you want to analyse.
+
+    Returns:
+    pandas.DataFrame : Return the dataframe trasformed.
+    '''
 
     df = removeUselessCols(df)
     df = fromDateTimeToTimestamp(df)
-    df = removeMessyRows(df)
+    df = removeMessyRows(df,trip_inference)
     
-
     return df

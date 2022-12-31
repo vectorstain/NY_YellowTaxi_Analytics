@@ -14,12 +14,11 @@ if __name__ == "__main__":
     df = readBoroughTripsByYearMonth(year,month,borough)
 
     # Clean the dataset
-    df = getCleanedDataFrame(df)
+    df = getCleanedDataFrame(df,trip_inference)
 
     # Analyzed the dataset
     PM_AVG,df = computeAverageFareAmountPerMile(df)
     print(f"The average PM is:{PM_AVG}")
-    
     PMT_AVG,df=computeAverageFareAmountPerMileInTime(df)
     print(f"The average PMT is:{PMT_AVG}")
 
