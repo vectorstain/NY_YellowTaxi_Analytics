@@ -5,7 +5,7 @@ def computeAverageFareAmountPerMile(df: pd.DataFrame) -> list:
     '''This func compute the prize per mile for each row of the passed dataframe.
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to conduct prize per mile analysis.
+    df (pandas.Dataframe) : The dataframe which you want to conduct prize per mile analysis.
 
     Returns:
     float : Return the avg prize per mile
@@ -24,7 +24,7 @@ def computeAverageFareAmountPerMileInTime(df: pd.DataFrame) -> list:
     '''This func compute the prize per mile per time unit for each row of the passed dataframe.
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to conduct prize per mile per time unit analysis.
+    df (pandas.Dataframe) : The dataframe which you want to conduct prize per mile per time unit analysis.
 
     Returns:
     float : Return the avg prize per mile per time

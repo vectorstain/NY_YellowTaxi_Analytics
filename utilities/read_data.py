@@ -112,7 +112,7 @@ def readUserInput() -> list:
 
     condition = False
     while not condition:
-        default_trip_inference="False"
+        default_trip_inference="N"
         trip_inference = (lambda x=input("\nDo you want to inference Unkown trip, Y or N:"): x if x != "" else default_trip_inference)()
         
         valid_input=["Y", "N", "yes", "no", "y", "n", "YES", "NO"]

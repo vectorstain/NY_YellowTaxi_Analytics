@@ -15,8 +15,8 @@ def removeMessyRows(df: pd.DataFrame, trip_inference:bool) -> pd.DataFrame:
     - If trip_inference is set to True drop rows where doesnt exist alternative trip.
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to conduct prize per mile analysis.
-    bool : trip_inference choose if you want to try to inference Unkown trips.
+    df (pandas.Dataframe) : The dataframe which you want to conduct prize per mile analysis.
+    trip_inference (bool) : Choose if you want to try to inference Unkown trips.
 
     Returns:
     pandas.DataFrame : Return the dataframe cleaned.
@@ -129,8 +129,8 @@ def replaceUnkownTripRecord(df: pd.DataFrame, avg_trip_df: pd.DataFrame) -> pd.D
     - Drops rows where PUL/DOL location is equ. to NV or NaN.
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to analyse.
-    pandas.Dataframe : The dataframe containing avg miles and durations of trips.
+    df (pandas.Dataframe) : The dataframe which you want to analyse.
+    avg_trip_df (pandas.Dataframe) : The dataframe containing avg miles and durations of trips.
 
     Returns:
     pandas.DataFrame : Return the dataframe cleaned with trip inference.
@@ -181,7 +181,7 @@ def fromDateTimeToTimestamp(df: pd.DataFrame) -> pd.DataFrame:
     '''This func trasform date-time fields to timestamp
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to analyse.
+    df (pandas.Dataframe) : The dataframe which you want to analyse.
 
     Returns:
     pandas.DataFrame : Return the dataframe with trasformed date-time fields to timestamp.
@@ -199,7 +199,7 @@ def removeUselessCols(df: pd.DataFrame) -> pd.DataFrame:
     - ['VendorID', 'RatecodeID', 'store_and_fwd_flag', 'extra', 'mta_tax','tip_amount','tolls_amount', 'improvement_surcharge', 'airport_fee']
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to analyse.
+    df (pandas.Dataframe) : The dataframe which you want to analyse.
 
     Returns:
     pandas.DataFrame : Return the dataframe without useles cols.
@@ -214,7 +214,8 @@ def getCleanedDataFrame(df: pd.DataFrame, trip_inference: bool) -> pd.DataFrame:
     '''This func clean and trasform the dataframe for to analysis.
 
     Parameters:
-    pandas.Dataframe : The dataframe which you want to analyse.
+    df (pandas.Dataframe) : The dataframe which you want to analyse.
+    trip_inference (bool) : trip_inference choose if you want to try to inference Unkown trips.
 
     Returns:
     pandas.DataFrame : Return the dataframe trasformed.
