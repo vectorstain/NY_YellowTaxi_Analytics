@@ -38,29 +38,13 @@ Or if you use a linux base terminal with conda already install you can run insta
 foo@bar:~$ source install.sh
 ```
 
-## Minimal example
-* Inside the main folder run the main script "analyzed_nyc_yt_trip.py":
-    ```shell
-    foo@bar:~$ python3 analyzed_nyc_yt_trip.py
-    ```
-* The script will ask to the user information about year, month and borough to analyse and if want to inference trip when PU/DO location are "Unkown". The default values are:
-  * Year: 2020
-  * Month: 1
-  * Borough: Bronx
-  * Inference: N
-* The interactive shell will show up as follow.
-> <p align="center"> <img src="./Docs/ReadMe_IMGs/example_1_.png" width="500"></p>
-* After that the program will show info about data processed, like:
-> <p align="center"> <img src="./Docs/ReadMe_IMGs/example_2_.png" width="500"></p>
-* After few seconds a pdf report and png graphs will be generated under ./data/out/ folder inside the repository.
-> <p align="center"> <img src="./Docs/ReadMe_IMGs/example_3_.png" width="500"></p>
-* Final result will show as follows:
-> <p align="center"> <img src="./Docs/ReadMe_IMGs/example_4_.png" width="500"></p>
-
 ## What process generates this data?
 The data used in the attached datasets were collected and provided to the NYC Taxi and Limousine Commission (TLC) by technology providers authorized under the Taxicab & Livery Passenger Enhancement Programs (TPEP/LPEP).
 
 You can find the data set at this [link](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) 
+
+## When was it created?
+On a first analysis we are going to examinate data collects on January 2020, you can find the data set [here to download](https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2020-01.parquet)
 
 ## Schema description
 | Field Name            | Description                                                                                                                                                                                                                                          |
@@ -86,6 +70,7 @@ You can find the data set at this [link](https://www.nyc.gov/site/tlc/about/tlc-
 | Airport_fee           | $1.25 for pick up only at LaGuardia and John F. Kennedy Airports                                                                                                                                                                                     |
 
 ## Data values
+The initial data set has 6405008 rows and 19 colums.
 
 | Field Name            | Type           | Range of values                 |
 | --------------------- | -------------- | ------------------------------- |
@@ -108,6 +93,12 @@ You can find the data set at this [link](https://www.nyc.gov/site/tlc/about/tlc-
 | total_amount          | float64        | [-1242.3,...,4268.3]            |
 | Congestion_Surcharge  | float64        | [-2.5,...,2.75]                 |
 | Airport_fee           | object         | Nan                             |
+
+The following graph highlights the NaN values in the schema:
+<br>
+<p align="center">
+<img src="./data/out/yt_2020_01_nulls_values_for_each_colum.png">
+</p>
 
 ## Connected schema
 This schema reports the details of each borough. 
@@ -155,4 +146,39 @@ For each invalid or NaN or untidy field we are going to proceed as follow:
 - If PULocation or DOLocation is NaN or NV or Unknown we are going to choose two district with similar average path or a trip with similar duration.
 - If the fare_amount is negative the row will be deleted.
 - If the congestion_surcharge is negative the row will be deleted. 
-- Duplicated records will be removed.
+
+Also we found 12949 duplicated rows that was deleted.
+
+
+## Data Boxplot
+<br>
+<p align="center">
+<img src="./data/out/boxplot_formatted.png">
+</p>
+
+## Data Bar Chart
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_barchart.png">
+</p>
+
+## Data Bar Plot
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_barplot.png">
+</p>
+
+## Data Heat Map
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_heatmap.png">
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_heatmap_v2.png">
+</p>
+
+## Data Scatter Plot
+<br>
+<p align="center">
+<img src="./data/out/yt_districts_2020_01_pgcount_fa_scatterplot.png">
+</p>
