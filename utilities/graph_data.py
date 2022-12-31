@@ -1,4 +1,5 @@
 import pandas as pd
+import geopandas as gp
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
@@ -114,5 +115,58 @@ def graphFareAmountOverTripDistOverPgCountScatterplot(df: pd.DataFrame, year:int
     FILE_NAME=f'./data/out/yt_of_{month}_{year}_from_{borough}_fare_amount_over_trip_distance_over_pg_count.png'
     plt.savefig(FILE_NAME,pad_inches=0.4,
     bbox_inches = 'tight')
+    
+    return FILE_NAME
+
+def graphPgOverBorough(df: pd.DataFrame, year:int, month: int, borough: str) -> str:
+    '''This func graph passenger count over boroughs.
+
+    Parameters:
+    pd (pandas.core.frame.DataFrame) : The pandas df of @year, @month, @borough selected.
+    year (int): The year you would analyzed, e.g. 2020 2021 2022.
+    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
+    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+
+    Returns:
+    (str): The generated graph file path.
+    '''
+
+    nyc_pul_pa_df=pd.DataFrame()
+    # Set boroughs names
+    nyc_pul_pa_df['BoroName']=['Brooklyn','Bronx','Manhattan','Queens','Staten Island']
+
+    # Set boroughs labels position
+    nyc_pul_pa_df['longitude']=[985000,1000000,970000 ,1040000,925000]
+    nyc_pul_pa_df['latitude']=[180000,250000,220000,200000,150000]
+
+    # Compute n of passengers took yt in each boroughs
+    boroughs = nyc_pul_pa_df["BoroName"].unique()
+    index = 0
+    for borought in boroughs:
+        nyc_pul_pa_df.at[index, "pa_count"] = df.loc[df["DOLocation"]==borought]["passenger_count"].sum()
+        index=index+1
+    
+    # load the data from geopandas.datasets
+    nyc_shp = gp.read_file(gp.datasets.get_path('nybb'))
+
+    # merge con_fa_nyc and nyc_shp
+    nyc_shp=nyc_shp.merge(nyc_pul_pa_df,on='BoroName')
+
+    plt.figure()
+    
+    # plot new york city 
+    ax = nyc_shp.plot(column='pa_count',figsize=(10, 10), alpha=0.5, edgecolor='k', cmap='Reds',legend=True,scheme="quantiles")
+
+    # add boroughs' names with numbers of passangers 
+    for i in range(len(nyc_shp)):
+        plt.text(nyc_shp.longitude[i],nyc_shp.latitude[i],"{}\nN. of people that took yellow taxi: {}".format(nyc_shp.BoroName[i],nyc_shp.pa_count[i],size=13))
+
+    # Add title
+    plt.title('NCY Yellow taxi passengers count',fontsize=25)
+
+    leg = ax.get_legend()
+    leg.set_bbox_to_anchor((1.35,1))
+    FILE_NAME=f'./data/out/yt_of_{month}_{year}_from_{borough}_pg_count.png'
+    plt.savefig(FILE_NAME)
     
     return FILE_NAME

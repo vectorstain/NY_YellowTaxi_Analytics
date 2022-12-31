@@ -1,6 +1,6 @@
 from fpdf import FPDF
 import pandas as pd
-from utilities.graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap
+from utilities.graph_data import graphPMTBoxplot, graphPMBoxplot, graphPMBarchart,graphFareAmountOverTripDistOverPgCountScatterplot, graphPgCountOverBoroughHeatmap, graphPgOverBorough
 
 class PDF(FPDF):
     
@@ -66,13 +66,14 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float
 
     #Write the footer
     pdf.alias_nb_pages()
-    
+
     # Generate graph
     PMT_boxplot_png_path = graphPMTBoxplot(df, year, month, borough)
     PM_boxplot_png_path = graphPMBoxplot(df, year, month, borough)
     PM_barchart_png_path = graphPMBarchart(df, year, month, borough)
     fare_amount_over_tripdist_over_pgcount_scatterplot_png_path = graphFareAmountOverTripDistOverPgCountScatterplot(df, year, month, borough)
     pg_count_over_borough_zone_heatmap_png_path = graphPgCountOverBoroughHeatmap(df, year, month, borough)
+    pg_count_over_borough_map_png_path = graphPgOverBorough(df, year, month, borough)
 
     # Insert descriptions
     description = f'The average prize per mile from {borough}\'s borough is: {PM};\nThe average prize per mile in time unit from {borough}\'s borough is: {PMT}\n'
