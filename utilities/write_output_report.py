@@ -52,8 +52,34 @@ class PDF(FPDF):
             self.image(images[3], x=95, y=126, w=100, type='PNG')
             self.image(images[4], x=95, y=200, w=100, type='PNG')
 
+    #Page body
+    def second_pg_body(self, images:list, description:str):
+
+        if len(images) > 0 :
+            self.add_page()
+            self.image(images[0], x=10, y=20, w=40, type='PNG')
+            self.image(images[1], x=50, y=20, w=40, type='PNG')
+            self.set_font('Arial', '', 7)
+
+            self.set_xy(90,30)
+            txt='This graph plot n of passeger moving from choosen borough to the others.\n'
+
+            txt+=description
+
+            self.multi_cell( w = 110, h = 5, txt = txt, border = 1, align = 'J', fill = False)
+
     
 def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float, PMT:float):
+    '''This func graph passenger count over boroughs in the nyc borough map.
+
+    Parameters:
+    pd (pandas.core.frame.DataFrame) : The pandas df of @year, @month, @borough selected.
+    year (int): The year you would analyzed, e.g. 2020 2021 2022.
+    month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
+    borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+    PM (float): The avg PM computed.
+    PMT (float): The avg PMT computed.
+    '''
 
     # Instantiation of inherited class
     pdf = PDF()
@@ -62,7 +88,7 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float
     pdf.set_title(f"Yellow Taxi Trip Report of {month}/{year} from {borough}")
 
     #Write the Author
-    pdf.set_author('Vittorio Maria Calendra\n Eleonora Papa')
+    pdf.set_author('Vincenzo Maria Calandra\n Eleonora Papa')
 
     #Write the footer
     pdf.alias_nb_pages()
@@ -79,6 +105,7 @@ def createPdfReport(df: pd.DataFrame, year:int, month:int, borough:str, PM:float
     description = f'The average prize per mile from {borough}\'s borough is: {PM};\nThe average prize per mile in time unit from {borough}\'s borough is: {PMT}\n'
 
     pdf.first_pg_body([PMT_boxplot_png_path,PM_boxplot_png_path,PM_barchart_png_path,fare_amount_over_tripdist_over_pgcount_scatterplot_png_path,pg_count_over_borough_zone_heatmap_png_path],description)
+    pdf.second_pg_body([pg_count_over_borough_map_png_path],"")
 
     # Save the report file
     pdf.output(f'./data/out/yt_report_of_{month}_{year}_from_{borough}.pdf', 'F')

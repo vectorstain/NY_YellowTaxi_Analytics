@@ -3,6 +3,8 @@ import geopandas as gp
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+# import background package
+import contextily as ctx
 
 def graphPMTBoxplot(df: pd.DataFrame, year:int, month: int, borough: str) -> str:
     '''This func graph the PMT value boxplot.
@@ -170,3 +172,49 @@ def graphPgOverBorough(df: pd.DataFrame, year:int, month: int, borough: str) -> 
     plt.savefig(FILE_NAME)
     
     return FILE_NAME
+
+# def graphPgOverBorough(df: pd.DataFrame, year:int, month: int, borough: str) -> str:
+#     '''This func graph passenger count over boroughs.
+
+#     Parameters:
+#     pd (pandas.core.frame.DataFrame) : The pandas df of @year, @month, @borough selected.
+#     year (int): The year you would analyzed, e.g. 2020 2021 2022.
+#     month (int): The n. th. month you would analyzed, e.g. 1 for Jen, 2 for Feb, 3 for May.
+#     borough (str): The borough you would analyzed, e.g. Manhattan, Bronx.
+
+#     Returns:
+#     (str): The generated graph file path.
+#     '''
+
+#     ny_zone_df = gp.read_file("data/raw/nyu_2451_34566.shp")
+#     ny_df = pd.read_csv("data/raw/nyc_zone_lookup.csv")
+#     ny_df = pd.merge(ny_df, ny_zone_df, left_on="LocationID",right_on="BoroCD")
+#     df = pd.merge(df, ny_df, left_on="DOLocationZone",right_on="Zone")
+
+#     nyc_pul_pa_df = pd.DataFrame()
+#     print(ny_df["Zone"].unique().tolist())
+#     nyc_pul_pa_df['BoroName']=(ny_df["Zone"].unique().tolist())
+
+
+#     # Compute n of passengers took yt in each boroughs
+#     boroughs = ny_df["Zone"].unique()
+#     index = 0
+#     for borought in boroughs:
+#         nyc_pul_pa_df.at[index, "pa_count"] = df.loc[df["DOLocationZone"]==borought]["passenger_count"].sum()
+#         index=index+1
+
+#     # merge con_fa_nyc and nyc_shp
+#     nyc_shp=nyc_shp.merge(nyc_pul_pa_df,on='BoroName')
+
+#     plt.figure()
+    
+#     #Convert the data to Web Mercator
+#     nyc_shp = nyc_shp.to_crs(epsg=3857)
+#     ax = nyc_shp.plot(column='pa_count',figsize=(10, 10), alpha=0.5, edgecolor='k', cmap='Reds',legend=True,scheme="quantiles")
+
+#     #Add background tiles to plot
+#     ctx.add_basemap(ax)
+#     FILE_NAME=f'./data/out/yt_of_{month}_{year}_from_{borough}_pg_count.png'
+#     plt.savefig(FILE_NAME)
+    
+#     return FILE_NAME
