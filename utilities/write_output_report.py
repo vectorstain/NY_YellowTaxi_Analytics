@@ -57,8 +57,7 @@ class PDF(FPDF):
 
         if len(images) > 0 :
             self.add_page()
-            self.image(images[0], x=10, y=20, w=40, type='PNG')
-            self.image(images[1], x=50, y=20, w=40, type='PNG')
+            self.image(images[0], x=10, y=20, w=80, type='PNG')
             self.set_font('Arial', '', 7)
 
             self.set_xy(90,30)
