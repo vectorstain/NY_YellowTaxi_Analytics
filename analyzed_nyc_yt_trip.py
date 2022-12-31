@@ -8,7 +8,7 @@ from utilities.write_output_report import createPdfReport
 if __name__ == "__main__":
 
     # Get user input
-    year,month,borough = readUserInput()
+    year,month,borough,trip_inference = readUserInput()
 
     # Read the dataset
     df = readBoroughTripsByYearMonth(year,month,borough)

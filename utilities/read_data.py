@@ -63,6 +63,7 @@ def readUserInput() -> list:
     year: A valid year of type int, 
     month: A valid month of type int,
     borough: A valid borough of type str.
+    trip_inference : True or False
     '''
     condition = False
     while  not condition :
@@ -108,7 +109,26 @@ def readUserInput() -> list:
             print(f"The typed borough \'{borough}\' is invalid, should be one of {borough_list}")
     # now, to clear the screen
     cls()
+
+    condition = False
+    while not condition:
+        default_trip_inference="False"
+        trip_inference = (lambda x=input("\nDo you want to inference Unkown trip, Y or N:"): x if x != "" else default_trip_inference)()
+        
+        valid_input=["Y", "N", "yes", "no", "y", "n", "YES", "NO"]
+        if trip_inference in valid_input:
+
+            if trip_inference in ["Y", "y", "YES", "yes"]:
+                trip_inference = True
+            else: 
+                trip_inference = False
+
+            condition = True
+        else:
+            print(f"The typed value \'{trip_inference}\' is invalid, should be one of {valid_input}")
+    # now, to clear the screen
+    cls()
     
-    return [int(year),int(month),str(borough)]
+    return [int(year),int(month),str(borough),bool(trip_inference)]
             
 
